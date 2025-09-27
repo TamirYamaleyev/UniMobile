@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ae18f37e3af2fc49a7a05e270a0be0a, type: 3}
   m_Name: DefaultWeapon
   m_EditorClassIdentifier: 
-  weaponName: 
-  projectilePrefab: {fileID: 0}
+  weaponName: DefaultWeapon
+  projectilePrefab: {fileID: 1278654656533599272, guid: 92b5c6a917d7083469ecdc7ef0f56e31, type: 3}
   damage: 1
   fireRate: 1
   projectileSpeed: 5

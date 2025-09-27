@@ -13,15 +13,15 @@ public class ObjectPooler : MonoBehaviour
 
     public static ObjectPooler Instance;
 
+    public List<Pool> pools;
+    private Dictionary<string, Queue<GameObject>> poolDictionary;
+
     private void Awake()
     {
         Instance = this;
     }
 
-    public List<Pool> pools;
-    private Dictionary<string, Queue<GameObject>> poolDictionary;
-
-    void Start()
+    private void Start()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
@@ -33,6 +33,14 @@ public class ObjectPooler : MonoBehaviour
             {
                 GameObject obj = Instantiate(pool.prefab);
                 obj.SetActive(false);
+
+                // Make sure bullets know their pool tag
+                PooledObject pooledObj = obj.GetComponent<PooledObject>();
+                if (pooledObj == null)
+                    obj.AddComponent<PooledObject>().poolTag = pool.tag;
+                else
+                    pooledObj.poolTag = pool.tag;
+
                 objectPool.Enqueue(obj);
             }
 
@@ -48,14 +56,38 @@ public class ObjectPooler : MonoBehaviour
             return null;
         }
 
-        GameObject objToSpawn = poolDictionary[tag].Dequeue();
+        // Find an inactive object in the pool
+        GameObject objToSpawn = null;
+        foreach (var item in poolDictionary[tag])
+        {
+            if (!item.activeInHierarchy)
+            {
+                objToSpawn = item;
+                break;
+            }
+        }
+
+        if (objToSpawn == null)
+        {
+            Debug.LogWarning("No inactive objects left in pool: " + tag);
+            return null;
+        }
 
         objToSpawn.SetActive(true);
         objToSpawn.transform.position = position;
         objToSpawn.transform.rotation = rotation;
 
-        poolDictionary[tag].Enqueue(objToSpawn);
-
         return objToSpawn;
     }
+
+    public void ReturnToPool(GameObject obj)
+    {
+        obj.SetActive(false);
+    }
+}
+
+// Simple helper component to store pool tag
+public class PooledObject : MonoBehaviour
+{
+    public string poolTag;
 }

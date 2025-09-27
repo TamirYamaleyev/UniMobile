@@ -181,6 +181,7 @@ GameObject:
   - component: {fileID: 854532424}
   - component: {fileID: 854532431}
   - component: {fileID: 854532430}
+  - component: {fileID: 854532433}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -333,6 +334,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &854532433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 854532423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d6708c4ed4fb62459041338e9bd5ad8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeWeapons:
+  - weapon: {fileID: 11400000, guid: 2d145a010460dbf4db06a5b16eeff25f, type: 2}
+    cooldownTimer: 0
 --- !u!1 &1269853139
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +382,9 @@ MonoBehaviour:
   - tag: Enemy
     prefab: {fileID: 8835941675932017436, guid: 759a73684e27bb043b96ca8694ded34e, type: 3}
     size: 20
+  - tag: Bullet
+    prefab: {fileID: 1278654656533599272, guid: 92b5c6a917d7083469ecdc7ef0f56e31, type: 3}
+    size: 30
 --- !u!4 &1269853141
 Transform:
   m_ObjectHideFlags: 0

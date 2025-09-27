@@ -15,11 +15,10 @@ public class Weapons : ScriptableObject
     {
         if (projectilePrefab == null) return;
 
-        // Spawn projectile from pool
         GameObject proj = ObjectPooler.Instance.SpawnFromPool(projectilePrefab.name, origin, Quaternion.identity);
         if (proj.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             rb.linearVelocity = direction.normalized * projectileSpeed;
         }
-    }
+    }   
 }
