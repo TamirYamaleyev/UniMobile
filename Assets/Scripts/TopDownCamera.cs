@@ -7,6 +7,11 @@ public class TopDownCamera : MonoBehaviour
     public float height = 10f;       // How high above the player
     public float tiltAngle = 30f;    // Camera tilt in degrees
 
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;    
+    }
+
     void LateUpdate()
     {
         if (player == null) return;

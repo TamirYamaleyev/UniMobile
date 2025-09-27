@@ -761,8 +761,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb4290ce6ee5f046b8c6aede551d41d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offset: {x: 0, y: 10, z: 0}
-  smoothSpeed: 0.125
+  player: {fileID: 0}
+  distance: 1.5
+  height: 10
+  tiltAngle: 80
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
