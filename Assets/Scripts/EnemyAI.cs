@@ -6,6 +6,7 @@ public class EnemyAI : MonoBehaviour
     public float moveSpeed = 3f;         // Movement speed
     public float stopDistance = 1.5f;    // How close to get before stopping
     public float rotationSpeed = 10f;    // How fast enemy rotates to face player
+    public int scoreToGive = 10;
 
     private Transform player;
     private Rigidbody rb;
@@ -57,5 +58,10 @@ public class EnemyAI : MonoBehaviour
     {
         if (rb != null)
             rb.linearVelocity = Vector3.zero;
+    }
+
+    public void Die()
+    {
+
     }
 }
