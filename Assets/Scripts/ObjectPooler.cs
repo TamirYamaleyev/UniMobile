@@ -15,6 +15,7 @@ public class ObjectPooler : MonoBehaviour
 
     public List<Pool> pools;
     private Dictionary<string, Queue<GameObject>> poolDictionary;
+    private Dictionary<string, Transform> poolParents; // Store parent containers
 
     private void Awake()
     {
@@ -24,9 +25,15 @@ public class ObjectPooler : MonoBehaviour
     private void Start()
     {
         poolDictionary = new Dictionary<string, Queue<GameObject>>();
+        poolParents = new Dictionary<string, Transform>();
 
         foreach (Pool pool in pools)
         {
+            // Create a parent GameObject for this pool
+            GameObject parent = new GameObject(pool.tag + "_Pool");
+            parent.transform.parent = this.transform; // optional: keep under ObjectPooler
+            poolParents.Add(pool.tag, parent.transform);
+
             Queue<GameObject> objectPool = new Queue<GameObject>();
 
             for (int i = 0; i < pool.size; i++)
@@ -34,7 +41,10 @@ public class ObjectPooler : MonoBehaviour
                 GameObject obj = Instantiate(pool.prefab);
                 obj.SetActive(false);
 
-                // Make sure bullets know their pool tag
+                // Parent it under the pool container
+                obj.transform.parent = parent.transform;
+
+                // Make sure bullets/enemies know their pool tag
                 PooledObject pooledObj = obj.GetComponent<PooledObject>();
                 if (pooledObj == null)
                     obj.AddComponent<PooledObject>().poolTag = pool.tag;
@@ -83,6 +93,13 @@ public class ObjectPooler : MonoBehaviour
     public void ReturnToPool(GameObject obj)
     {
         obj.SetActive(false);
+
+        // Optional: reparent to pool container in case it was moved in the scene
+        PooledObject pooledObj = obj.GetComponent<PooledObject>();
+        if (pooledObj != null && poolParents.ContainsKey(pooledObj.poolTag))
+        {
+            obj.transform.parent = poolParents[pooledObj.poolTag];
+        }
     }
 }
 
