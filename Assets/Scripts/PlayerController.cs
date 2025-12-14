@@ -75,6 +75,11 @@ public class PlayerController : MonoBehaviour
         dashCooldownTimer -= Time.deltaTime;
     }
 
+    public Vector3 GetFacingDirection()
+    {
+        return transform.forward; // or whatever your facing logic is
+    }
+
     void HandleMove(Vector2 dir)
     {
         moveDirection = dir.magnitude > 0.01f ? dir : Vector2.zero;
